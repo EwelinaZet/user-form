@@ -1,13 +1,16 @@
 <template>
   <div id="app">
+    <TheForm />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import TheForm from './components/TheForm.vue';
 
 @Component({
   components: {
+    TheForm
   },
 })
 export default class App extends Vue {}
