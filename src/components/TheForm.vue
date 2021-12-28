@@ -89,5 +89,92 @@ export default class TheForm extends Vue {
 
 <!-- Add 'scoped' attribute to limit CSS to this component only -->
 <style scoped>
-
+.form {
+  margin: 2rem auto;
+  max-width: 25rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  padding: 2rem;
+  background-color: #ffffff;
+  position: relative;
+}
+.form-title {
+  font-size: 26px;
+  font-weight: bold;
+  font-stretch: extra-expanded;
+  color: #a59aac;
+}
+.form-control.invalid input {
+  border-color: #9700ff;
+}
+.form-control.invalid label {
+  color: #9700ff;
+}
+.form-control {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-top: 1.5rem;
+}
+.input-label {
+  color: #8597a3;
+  position: absolute;
+  top: 1.5rem;
+  transition: .25s ease;
+}
+.input-label.active {
+  color: #6658d3;
+  transform: translateY(-1.5rem);
+}
+.input-field {
+  border: 0;
+  background-color: transparent;
+  border-bottom: 2px solid #eee; 
+  font: inherit;
+  font-size: 1rem;
+  padding: 1.25rem 0;
+}
+.input-field:focus{
+  outline: 0;
+  border-bottom-color: rgb(182, 182, 182);
+  padding: 1.5rem .25rem 0;
+  transition: .25s ease;
+}
+.input-notificatioin {
+  font-size: 14px;
+  color: gray;
+}
+textarea {
+  min-height: 100px;
+  margin-top: 30px;
+  color:gray;
+  resize: none;
+}
+button {
+  background: linear-gradient(to right, #cda9f2, #8c5df0);
+  border-radius: 10rem;
+  margin-top: 30px;
+  width: 12rem;
+  height: 4rem;
+  font-size: 18px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 0px 10px 20px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-stretch: ultra-condensed;
+  transition: 1s ease;
+}
+button.active{
+  background-color: royalblue;
+  color: #ffffff;
+}
+.button-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>
