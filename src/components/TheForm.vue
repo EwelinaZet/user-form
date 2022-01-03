@@ -1,5 +1,5 @@
 <template>
-  <form class='form'>
+  <form class='form' @submit.prevent='sendData'>
     <h2 class='form-title'>Contact Us</h2>
     <div class='form-control' :class='{invalid: nameValidity}'>
       <label class='input-label'>Name</label>
