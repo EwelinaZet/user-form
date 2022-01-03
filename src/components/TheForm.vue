@@ -22,9 +22,10 @@
       <p class='input-notificatioin' v-if='messageValidity'>Message cannot be blank and cannot be longer than 500 characters.</p>
     </div>
     <div>
-        <button>
+        <button :class="{active: buttonActive}">
           <span class='button-content'>
             <p>SEND</p>
+            <img class="arrow-icon" src="@/assets/right-arrow.png">
           </span>
         </button>
     </div>
@@ -64,6 +65,8 @@ export default class TheForm extends Vue {
   messageValidity = false
 
   isSending = false
+
+  buttonActive = false
 
   sendMessageSuccess = false
 
@@ -125,6 +128,7 @@ export default class TheForm extends Vue {
       setTimeout(() => this.sendMessageSuccess = false, 5000)
       this.messageStatusAlert = 'Your message was successfully sent.'
       this.clearInptValues()
+      this.buttonActive = true
     })
     .catch((error) => {
       this.sendMessageError = true
@@ -225,13 +229,16 @@ button {
   transition: 1s ease;
 }
 button.active {
-  background-color: royalblue;
-  color: #ffffff;
+  background: #9090919c;
+  color: white;
 }
 .button-content {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.arrow-icon {
+  margin-left: 10px;
 }
 .sending-data {
   position: absolute;
