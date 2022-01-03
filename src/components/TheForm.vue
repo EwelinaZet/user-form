@@ -28,6 +28,17 @@
           </span>
         </button>
     </div>
+    <div v-if='isSending || sendMessageError || sendMessageSuccess' class='sending-data'>
+      <div v-if="isSending" class='sending-status'>
+        <span class="loader"></span>
+        <span>Sending date...</span>
+      </div>
+      <div v-if="true" class='sending-result' :class="{error: sendMessageError, success: sendMessageSuccess}">
+        <img v-if='sendMessageSuccess' class="notification-icon" src="@/assets/success-icon.png">
+        <img v-if='sendMessageError' class="notification-icon" src="@/assets/error-icon.png">
+        <span>{{ messageStatusAlert }}</span>
+      </div>
+    </div>
   </form>
 </template>
 
@@ -51,6 +62,14 @@ export default class TheForm extends Vue {
   subjectValidity = false
 
   messageValidity = false
+
+  isSending = false
+
+  sendMessageSuccess = false
+
+  sendMessageError = false
+
+  messageStatusAlert = ''
 
   validateNameInput(): void {
     if(this.name.length < 5 || this.name.length > 50 || this.name.length === 0) {
@@ -78,12 +97,43 @@ export default class TheForm extends Vue {
   }
     
   validateMessageInput(): void {
-    if(this.name.length === 0 || this.name.length > 500) {
+    if(this.message.length === 0 || this.message.length > 500) {
       this.messageValidity = true
     } else {
       this.messageValidity = false
     }
   }
+
+   async sendData() {
+    if(this.nameValidity === false && this.emailValidity === false && this.subjectValidity === false && this.messageValidity === false){
+    this.isSending = true
+    await fetch('https://formapi-8b31a-default-rtdb.firebaseio.com/survey.json', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: this.name,
+        email: this.email,
+        subject: this.subject,
+        message: this.message,
+      }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      this.sendMessageSuccess = true
+      setTimeout(() => this.sendMessageSuccess = false, 5000)
+      this.messageStatusAlert = 'Your message was successfully sent.'
+    })
+    .catch((error) => {
+      this.sendMessageError = true
+      setTimeout(() => this.sendMessageError = false, 5000)
+      this.messageStatusAlert = error
+    });
+    }
+    this.isSending = false
+  }
+
 }
 </script>
 
