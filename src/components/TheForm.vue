@@ -184,7 +184,7 @@ export default class TheForm extends Vue {
   font-size: 1rem;
   padding: 1.25rem 0;
 }
-.input-field:focus{
+.input-field:focus {
   outline: 0;
   border-bottom-color: rgb(182, 182, 182);
   padding: 1.5rem .25rem 0;
@@ -218,7 +218,7 @@ button {
   font-stretch: ultra-condensed;
   transition: 1s ease;
 }
-button.active{
+button.active {
   background-color: royalblue;
   color: #ffffff;
 }
@@ -226,5 +226,51 @@ button.active{
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.sending-data {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 60%;
+  width: 400px;
+  min-height: 120px;
+  background-color: white;
+  box-shadow: 0px 0px 58px 14px rgba(186, 186, 186, 1);
+}
+.sending-status {
+  font-size: 18px;
+  color: gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loader {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #929292;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 2s linear infinite;
+  margin-right: 20px;
+}
+.sending-result {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 20px;
+}
+.success {
+  color:#53DC43;
+}
+.error {
+  color:#fc573b;
+}
+.notification-icon {
+  margin-right: 20px;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 </style>
