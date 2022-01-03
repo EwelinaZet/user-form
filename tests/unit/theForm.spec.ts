@@ -59,5 +59,84 @@ describe('TheForm.vue', () => {
     textarea.setValue('Lorem ipsum dolor sit amet.')
     expect(wrapper.vm.message).toEqual('Lorem ipsum dolor sit amet.')
   })
+
+  describe.each([
+    ['Joa', true],
+    ['JoannaJoannaJoannaJoannaJoannaJoannaJoannaJoannaJoanna', true],
+    ['', true],
+    ['Joanna', false]
+  ])('#validateNameInput', (mockName, expected) => {
+    it('validateNameInput', () => {
+      wrapper = shallowMount(TheForm,{
+        data() {
+          return  { 
+            name: mockName,
+            nameValidity: false
+          }
+        }
+      })
+
+    wrapper.vm.validateNameInput()
+    expect(wrapper.vm.nameValidity).toEqual(expected)
+    })
+  })
+
+  describe.each([
+    ['joanna.kowalskagmail.com', true],
+    ['joanna.kowalska@com', true],
+    ['', true],
+    ['joanna.kowalska@gmail.com', false]
+  ])('#validateEmailInpu', (mockEmail, expected) => {
+    it('validateEmailInpu', () => {
+      wrapper = shallowMount(TheForm,{
+        data() {
+          return  { 
+            email: mockEmail,
+            emailValidity: false
+          }
+        }
+      })
+      
+    wrapper.vm.validateEmailInput()
+    expect(wrapper.vm.emailValidity).toEqual(expected)
+    })
+  })
+
+  describe.each([
+    ['Issue Report Issue Report Issue Report Issue Report Issue Report Issue Report Issue Report Issue Report', true],
+    ['Issue Report', false]
+  ])('#validateSubjectInput', (mockSubject, expected) => {
+    it('validateSubjectInput', () => {
+      wrapper = shallowMount(TheForm,{
+        data() {
+          return  { 
+            subject: mockSubject,
+            subjectValidity: false
+          }
+        }
+      })
+    wrapper.vm.validateSubjectInput()
+    expect(wrapper.vm.subjectValidity).toEqual(expected)
+    })
+  })
+
+  describe.each([
+    ['Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', true],
+    ['', true],
+    ['Lorem ipsum dolor sit amet.', false]
+  ])('#validateMessageInput', (mockMessage, expected) => {
+    it('validateMessageInput', () => {
+      wrapper = shallowMount(TheForm, {
+        data() {
+          return  {
+            message: mockMessage,
+            messageValidity: false
+          }
+        }
+      })
+    wrapper.vm.validateMessageInput()
+    expect(wrapper.vm.messageValidity).toEqual(expected)
+    })
+  })
 })
 
