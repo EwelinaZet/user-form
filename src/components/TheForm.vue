@@ -124,6 +124,7 @@ export default class TheForm extends Vue {
       this.sendMessageSuccess = true
       setTimeout(() => this.sendMessageSuccess = false, 5000)
       this.messageStatusAlert = 'Your message was successfully sent.'
+      this.clearInptValues()
     })
     .catch((error) => {
       this.sendMessageError = true
@@ -133,7 +134,12 @@ export default class TheForm extends Vue {
     }
     this.isSending = false
   }
-
+  clearInptValues() {
+    this.name=''
+    this.email=''
+    this.subject=''
+    this.message=''
+  }
 }
 </script>
 
