@@ -66,7 +66,7 @@ describe('TheForm.vue', () => {
     ['', true],
     ['Joanna', false]
   ])('#validateNameInput', (mockName, expected) => {
-    it('validateNameInput', () => {
+    it('#validateNameInput should return false if input is correct - true if not', () => {
       wrapper = shallowMount(TheForm,{
         data() {
           return  { 
@@ -86,8 +86,8 @@ describe('TheForm.vue', () => {
     ['joanna.kowalska@com', true],
     ['', true],
     ['joanna.kowalska@gmail.com', false]
-  ])('#validateEmailInpu', (mockEmail, expected) => {
-    it('validateEmailInpu', () => {
+  ])('#validateEmailInput', (mockEmail, expected) => {
+    it('#validateEmailInput should return false if input is correct - true if not', () => {
       wrapper = shallowMount(TheForm,{
         data() {
           return  { 
@@ -106,7 +106,7 @@ describe('TheForm.vue', () => {
     ['Issue Report Issue Report Issue Report Issue Report Issue Report Issue Report Issue Report Issue Report', true],
     ['Issue Report', false]
   ])('#validateSubjectInput', (mockSubject, expected) => {
-    it('validateSubjectInput', () => {
+    it('#validateSubjectInput should return false if input is correct - true if not', () => {
       wrapper = shallowMount(TheForm,{
         data() {
           return  { 
@@ -125,7 +125,7 @@ describe('TheForm.vue', () => {
     ['', true],
     ['Lorem ipsum dolor sit amet.', false]
   ])('#validateMessageInput', (mockMessage, expected) => {
-    it('validateMessageInput', () => {
+    it('#validateMessageInput should return false if input is correct - true if not', () => {
       wrapper = shallowMount(TheForm, {
         data() {
           return  {
@@ -137,6 +137,75 @@ describe('TheForm.vue', () => {
     wrapper.vm.validateMessageInput()
     expect(wrapper.vm.messageValidity).toEqual(expected)
     })
+  })
+
+  describe.each([
+    [false, false, false, false, true],
+    [true, false, false, false, false],
+    [undefined, false, false, false, false]
+  ])('#isFormValid method', (nameValidity, emailValidity, subjectValidity, messageValidity, expected) => {
+    it('#isFormValid should return if inputs validity are false', () => {
+      wrapper = shallowMount(TheForm, {
+        data() {
+          return  {
+            nameValidity,
+            emailValidity,
+            subjectValidity,
+            messageValidity
+          }
+        }
+      })
+    wrapper.vm.isFormValid()
+    expect(wrapper.vm.isFormValid()).toBe(expected)
+    })
+  })
+
+  it('#clearInptValues should clear inputs value', () => {
+    wrapper = shallowMount(TheForm, {
+      data() {
+        return {
+          name: 'Joanna',
+          email: 'joanna.kowalska@gmail.com',
+          subject: 'Issue Report',
+          message: 'Lorem ipsum dolor sit amet.',
+       }
+      }
+    })
+    wrapper.vm.clearInptValues()
+    expect(wrapper.vm.name).toEqual('')
+    expect(wrapper.vm.email).toEqual('')
+    expect(wrapper.vm.subject).toEqual('')
+    expect(wrapper.vm.message).toEqual('')
+  })
+
+  it('#sendData on success', () => {
+    wrapper = shallowMount(TheForm, {
+      data() {
+        return {
+          messageStatusAlert: '',
+          buttonActive: false,
+          responseStatus: 200
+       }
+      },
+    })
+    wrapper.vm.sendData()
+    expect(wrapper.vm.messageStatusAlert).toEqual('Your message was successfully sent.')
+    expect(wrapper.vm.buttonActive).toBe(true)
+    wrapper.vm.clearInptValues()
+  })
+
+  it('#sendData on error', async () => {
+    wrapper = shallowMount(TheForm, {
+      data() {
+        return {
+          messageStatusAlert: '',
+          responseError: 'TypeError: Internal Server Error.',
+          responseStatus: 500,
+        }
+      },
+    })
+    await wrapper.vm.sendData()
+    expect(wrapper.vm.messageStatusAlert).toEqual('TypeError: Internal Server Error.')
   })
 })
 
