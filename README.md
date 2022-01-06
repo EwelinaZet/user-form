@@ -1,29 +1,37 @@
-# project
+# User Form
 
-## Project setup
-```
-npm install
-```
+User Form is a Vue.js single application which allow us to send message.
+To do that we need to complete the for correctly. If not, we will receive
+suitable notification. After that we use 'Send' button to send message to Api.
 
-### Compiles and hot-reloads for development
+Application created with:
+
+- vue.js 2
+- type Script 4.1.5
+- ts-jest 24.0.19
+
+### Running the project
+
 ```
-npm run serve
+1.Clone this project locally
+2.Run npm install in your bash/command line
+3.Run npm run serve in your bash/command line
 ```
 
 ### Compiles and minifies for production
+
 ```
-npm run build
+1.Run npm run build in your bash/command line
 ```
 
 ### Run your unit tests
+
 ```
-npm run test:unit
+1.Run npm run test:unit in your bash/command line
 ```
 
 ### Lints and fixes files
-```
-npm run lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+```
+1.Run npm run lint in your bash/command line
+```
