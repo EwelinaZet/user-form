@@ -1,5 +1,5 @@
 <template>
-  <form class='form' @submit.prevent='sendData'>
+  <form class='form' @submit.prevent='postData'>
     <h2 class='form-title'>Contact Us</h2>
     <div class='form-control' :class='{invalid: nameValidity}'>
       <label class='input-label'>Name</label>
@@ -74,6 +74,10 @@ export default class TheForm extends Vue {
 
   messageStatusAlert = ''
 
+  responseStatus = null
+
+  responseError = null
+
   validateNameInput(): void {
     if(this.name.length < 5 || this.name.length > 50 || this.name.length === 0) {
       this.nameValidity = true
@@ -107,8 +111,30 @@ export default class TheForm extends Vue {
     }
   }
 
-   async sendData() {
-    if(this.nameValidity === false && this.emailValidity === false && this.subjectValidity === false && this.messageValidity === false){
+  isFormValid(): boolean {
+    return this.nameValidity === false && this.emailValidity === false && this.subjectValidity === false && this.messageValidity === false
+  }
+
+  sendData(): void {
+    if (this.isFormValid) {
+      if(this.responseStatus === 200) {
+        this.sendMessageSuccess = true
+        setTimeout(() => this.sendMessageSuccess = false, 5000)
+        this.messageStatusAlert = 'Your message was successfully sent.'
+        this.clearInptValues()
+        this.buttonActive = true
+      } else {
+        this.sendMessageError = true
+        setTimeout(() => this.sendMessageError = false, 5000)
+        this.messageStatusAlert = this.responseError
+      }
+    }
+      this.isSending = false
+      this.responseStatus = null
+      this.responseError = null
+  }
+ 
+  async postData(): Promise<void> {
     this.isSending = true
     await fetch('https://formapi-8b31a-default-rtdb.firebaseio.com/survey.json', {
       method: 'POST',
@@ -122,23 +148,17 @@ export default class TheForm extends Vue {
         message: this.message,
       }),
     })
-    .then(response => response.json())
-    .then(data => {
-      this.sendMessageSuccess = true
-      setTimeout(() => this.sendMessageSuccess = false, 5000)
-      this.messageStatusAlert = 'Your message was successfully sent.'
-      this.clearInptValues()
-      this.buttonActive = true
+    .then(response => {
+      response.json()
+      this.responseStatus = response.status
     })
     .catch((error) => {
-      this.sendMessageError = true
-      setTimeout(() => this.sendMessageError = false, 5000)
-      this.messageStatusAlert = error
+      this.responseError = error
     });
-    }
-    this.isSending = false
+    this.sendData()
   }
-  clearInptValues() {
+
+  clearInptValues(): void {
     this.name=''
     this.email=''
     this.subject=''
