@@ -136,7 +136,7 @@ export default class TheForm extends Vue {
  
   async postData(): Promise<void> {
     this.isSending = true
-    await fetch('https://formapi-8b31a-default-rtdb.firebaseio.com/survey.json', {
+    await fetch('https://5d9f7fe94d823c0014dd323d.mockapi.io/api/message', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
